@@ -167,7 +167,7 @@ function watchNewYork() {
 
   let $dayOfWeek = days[$date.getDay()];
   let day = $date.getDate();
-  let month = $date.getMonth();
+  let month = $date.getMonth() + 1;
   let year = $date.getFullYear();
 
   if (month < 10) {
