@@ -1,248 +1,95 @@
-/* image principale */
 
-body {
-	margin: 40px auto;
-
-}
-
-video {
-	position: fixed;
-	top: 50%;
-	left: 50%;
-	min-width: 100%;
-	min-height: 100%;
-	width: auto;
-	height: auto;
-	z-index: -100;
-	transform: translateX(-50%) translateY(-50%);
-}
-
-.watch-right {
-
-	width: 50%;
-	float: right;
-	height: 675px;
-	margin-right: 15px;
-	background: url(tour\ effeil-jour.jpeg);
-	text-align: center;
-	background-size: cover;
-	background-position: center center;
-	background-repeat: no-repeat;
-
-
-}
-
-.watch-right .principal-title {
-	background-color: rgba(217, 217, 217, 0.52);
-	width: 200px;
-	margin: 50px auto;
-	font-size: 55px;
-}
-
-.watch-right .paris {
-	/* border: 2px solid rgb(51, 255, 0); */
-	background: rgba(83, 82, 79, 0.8);
-	border-radius: 20px;
-	width: 90%;
-	height: 450px;
-	margin: 50px auto;
-}
-
-.watch-right .paris h2 {
-	color: white;
-	font-size: 55px;
-}
-
-
-.watch-right .paris .hour-paris .p1,
-.p3,
-.p5 {
-	background-color: white;
-	width: 100%;
-	font-size: 100px;
-	border-radius: 0px 0px 10px 15px;
-	border-top: 20px solid black;
-}
-
-.watch-right .paris .hour-paris .p2,
-.p4 {
-	margin: 0 40px;
-	font-size: 80px;
-}
-
-.watch-right .paris .date-paris {
-
-
-	margin-top: 70px;
-}
-
-.watch-right .paris .date-paris span {
-	font-weight: bold;
-	font-style: italic;
-	font-size: 30px;
-	margin: 0 15px;
-}
-
-
-/* image gauche haut */
-.watch-left1 {
-
-	width: 40%;
-	height: 315px;
-	background: url(new-york.jpg);
-	background-size: cover;
-	background-position: center center;
-	background-repeat: no-repeat;
-	margin-left: 10px;
-}
-
-.watch-left1 .secondary-title1 {
-	background-color: rgba(217, 217, 217, 0.7);
-	width: 110px;
-
-	margin: 50px auto;
-	padding-top: 10px;
-}
-
-.watch-left1 .new-york {
-
-	background: rgba(83, 82, 79, 0.8);
-	border-radius: 10px;
-	width: 90%;
-	height: 170px;
-	margin: 25px auto;
-}
-
-
-.watch-left1 .new-york h2 {
-	color: white;
-	font-size: 25px;
-	text-align: center;
-}
-
-.watch-left1 .new-york .hour-new-york {
-
-	width: 42%;
-	margin: 0 auto;
-}
-
-
-.watch-left1 .new-york .hour-new-york .n1,
-.n3,
-.n5 {
-
-	background-color: white;
-	width: 50%;
-	font-size: 40px;
-	border-radius: 0px 0px 5px 8px;
-	border-top: 10px solid black;
-}
-
-
-.watch-left1 .new-york .hour-new-york .n2,
-.n4 {
-	margin: 0 15px;
-	font-size: 40px;
-}
-
-
-.watch-left1 .new-york .date-new-york {
-
-	width: 25%;
-	margin: 25px auto;
-}
-
-
-.watch-left1 .new-york .date-new-york span {
-	font-weight: bold;
-	font-style: italic;
-	font-size: 15px;
-
-}
-
-
-/* image gauche bas */
-.watch-left2 {
-
-	margin-top: 20px;
-	margin-left: 10px;
-	width: 40%;
-	height: 315px;
-	background: url(cameroun.jpg);
-	background-size: cover;
-	background-position: center center;
-	background-repeat: no-repeat;
-
-
-}
-
-.watch-left2 .secondary-title2 {
-
-	background-color: rgba(217, 217, 217, 0.7);
-	;
-	width: 110px;
-	margin: 10px auto;
-	padding-top: 10px;
-	text-align: center;
-}
-
-.watch-left2 .yaounde {
-
-	background: rgba(83, 82, 79, 0.8);
-	border-radius: 10px;
-	width: 90%;
-	height: 170px;
-	margin: 25px auto;
-}
-
-
-.watch-left2 .yaounde h2 {
-
-	color: white;
-	font-size: 25px;
-	text-align: center;
-}
-
-
-.watch-left2 .yaounde .hour-yaounde {
-
-
-	width: 40%;
-	margin: 0 auto;
-}
-
-
-.watch-left2 .yaounde .hour-yaounde .c1,
-.c3,
-.c5 {
-	background-color: white;
-	width: 50%;
-	font-size: 40px;
-	border-radius: 0px 0px 5px 8px;
-	border-top: 10px solid black;
-
-}
-
-
-.watch-left2 .yaounde .hour-yaounde .c2,
-.c4 {
-
-	margin: 0 15px;
-	font-size: 40px;
-}
-
-
-.watch-left2 .yaounde .date-yaounde {
-
-
-	width: 30%;
-	margin: 25px auto;
-}
-
-
-.watch-left2 .yaounde .date-yaounde span {
-
-	font-weight: bold;
-	font-style: italic;
-	font-size: 15px;
-}
+    body, html {
+      height: 100%;
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #222;
+    }
+    #myVideo {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      min-width: 100vw;
+      min-height: 100vh;
+      width: auto;
+      height: auto;
+      z-index: -1;
+      transform: translate(-50%, -50%);
+      object-fit: cover;
+    }
+    .watch-section {
+      border-radius: 18px;
+      color: #fff;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+      padding: 24px 16px;
+      min-width: 280px;
+      background-size: cover;
+      background-position: center;
+      margin-bottom: 24px;
+    }
+    .watch-paris {
+      background-image: url('tour effeil-jour.jpeg');
+    }
+    .watch-ny {
+      background-image: url('new-york.jpg');
+    }
+    .watch-yaounde {
+      background-image: url('cameroun.jpg');
+    }
+    .watch-title {
+      background: rgba(217,217,217,0.7);
+      color: #222;
+      border-radius: 10px;
+      padding: 12px 24px;
+      margin-bottom: 20px;
+      font-size: 2rem;
+      text-align: center;
+      display: inline-block;
+    }
+    .watch-block {
+      background: rgba(83,82,79,0.85);
+      border-radius: 16px;
+      padding: 20px 10px;
+      margin-top: 16px;
+      width: 100%;
+      text-align: center;
+    }
+    .watch-block h2 {
+      color: #fff;
+      font-size: 1.7rem;
+      margin-bottom: 12px;
+    }
+    .watch-hour span {
+      display: inline-block;
+      background: #fff;
+      color: #111;
+      font-size: 2.2rem;
+      margin: 0 6px;
+      padding: 8px 12px;
+      border-radius: 0 0 10px 12px;
+      border-top: 6px solid #111;
+    }
+    .watch-hour .sep {
+      background: none;
+      border: none;
+      color: #fff;
+      font-size: 2.2rem;
+      padding: 0 2px;
+    }
+    .watch-date span {
+      font-weight: bold;
+      font-style: italic;
+      font-size: 1.1rem;
+      margin: 0 6px;
+      color: #fff;
+    }
+    @media (max-width: 900px) {
+      .watch-title {
+        font-size: 1.4rem;
+        padding: 8px 12px;
+      }
+      .watch-hour span {
+        font-size: 1.2rem;
+        padding: 5px 7px;
+      }
+    }

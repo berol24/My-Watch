@@ -1,284 +1,160 @@
-// heure de paris
-let $watchRight = document.querySelector(".watch-right");
-let $principalTitle = document.querySelector(".watch-right .principal-title");
-let $greetingParis = document.querySelector(".watch-right .paris h2");
-let $hourParis = document.querySelectorAll(
-  ".watch-right .paris .hour-paris span"
-);
-let $dayParis = document.querySelectorAll(
-  ".watch-right .paris .date-paris span"
-);
 
-function watchParis() {
-  let $date = new Date();
+const days = [
+  "Dimanche", "Lundi", "Mardi", "Mercredi",
+  "Jeudi", "Vendredi", "Samedi"
+];
+const months = [
+  "Janvier", "Février", "Mars", "Avril", "Mai", "Juin",
+  "Juillet", "Août", "Septembre", "Octobre", "Novembre", "Décembre"
+];
 
-  let h = $date.getHours();
-  let min = $date.getMinutes();
-  let sec = $date.getSeconds();
+function updateClock({
+  sectionSelector,
+  hourOffset = 0,
+  nightBg = "",
+  nightTitle = "",
+  nightGreetingColor = "black",
+  nightTitleBg = "rgba(0,0,0,0.7)",
+  nightTitleColor = "white"
+}) {
+  const section = document.querySelector(sectionSelector);
+  if (!section) return;
 
-  if (sec < 10) {
-    sec = "0" + sec;
+  const title = section.querySelector("h1");
+  const greeting = section.querySelector("h2");
+  const hourSpans = section.querySelectorAll(".watch-hour span");
+  const dateSpans = section.querySelectorAll(".watch-date span");
+
+  let now = new Date();
+
+  // Calcul de l'heure locale
+  let h = now.getHours() + hourOffset;
+  if (h < 0) h += 24;
+  if (h >= 24) h -= 24;
+  let min = now.getMinutes();
+  let sec = now.getSeconds();
+
+  // Formattage
+  h = h < 10 ? "0" + h : h;
+  min = min < 10 ? "0" + min : min;
+  sec = sec < 10 ? "0" + sec : sec;
+
+  // Affichage de l'heure
+  if (hourSpans.length >= 5) {
+    hourSpans[0].innerHTML = h;
+    hourSpans[2].innerHTML = min;
+    hourSpans[4].innerHTML = sec;
   }
-  if (min < 10) {
-    min = "0" + min;
-  }
-  if (h < 10) {
-    h = "0" + h;
+
+  // Affichage du jour et de la date
+  let dayOfWeek = days[now.getDay()];
+  let day = now.getDate();
+  let month = now.getMonth();
+  let year = now.getFullYear();
+
+  if (dateSpans.length >= 4) {
+    dateSpans[0].innerHTML = dayOfWeek;
+    dateSpans[1].innerHTML = day < 10 ? "0" + day : day;
+    dateSpans[2].innerHTML = months[month];
+    dateSpans[3].innerHTML = year;
   }
 
-  if (h < 12) {
-    $greetingParis.innerHTML = "Bonjour";
-  }
+  // Définir le message de salutation et le style selon l'heure
+  const hNum = parseInt(h, 10);
+  let isNight = false;
 
-  if (h >= 12 && h < 18) {
-    $greetingParis.innerHTML = "Bon-après-midi";
-  }
-
-  if (h >= 18 && h < 24) {
-    $greetingParis.innerHTML = "Bonsoir";
-    $greetingParis.style.color = "black";
-    $watchRight.style.backgroundImage = "url('paris-nuit.jpg')";
-    $watchRight.style.backgroundPosition = "center center";
-    $watchRight.style.backgroundSize = "cover";
-    $principalTitle.style.backgroundColor = "rgba(0, 0, 0, 0.7)";
-    $principalTitle.style.color = "white";
-
-    for (let i = 0; i < $hourParis.length; i++) {
-      if (i == 0 || i == 2 || i == 4) {
-        $hourParis[i].style.color = "white";
-        $hourParis[i].style.backgroundColor = "black";
-        $hourParis[i].style.borderTop = "20px solid white";
+  if (hNum < 12) {
+    greeting.innerHTML = "Bonjour";
+    greeting.style.color = "";
+    section.style.backgroundImage = "";
+    if (title) {
+      title.style.backgroundColor = "";
+      title.style.color = "";
+    }
+    hourSpans.forEach((span, i) => {
+      if (i === 0 || i === 2 || i === 4) {
+        span.style.color = "";
+        span.style.backgroundColor = "";
+        span.style.borderTop = "";
       }
+    });
+    dateSpans.forEach(span => span.style.color = "");
+  } else if (hNum < 18) {
+    greeting.innerHTML = "Bon-après-midi";
+    greeting.style.color = "";
+    section.style.backgroundImage = "";
+    if (title) {
+      title.style.backgroundColor = "";
+      title.style.color = "";
     }
-
-    for (let i = 0; i < $dayParis.length; i++) {
-      $dayParis[i].style.color = "white";
+    hourSpans.forEach((span, i) => {
+      if (i === 0 || i === 2 || i === 4) {
+        span.style.color = "";
+        span.style.backgroundColor = "";
+        span.style.borderTop = "";
+      }
+    });
+    dateSpans.forEach(span => span.style.color = "");
+  } else {
+    greeting.innerHTML = "Bonsoir";
+    greeting.style.color = nightGreetingColor;
+    if (nightBg) {
+      section.style.backgroundImage = `url('${nightBg}')`;
+      section.style.backgroundPosition = "center center";
+      section.style.backgroundSize = "cover";
     }
+    if (title) {
+      title.style.backgroundColor = nightTitleBg;
+      title.style.color = nightTitleColor;
+    }
+    hourSpans.forEach((span, i) => {
+      if (i === 0 || i === 2 || i === 4) {
+        span.style.color = "white";
+        span.style.backgroundColor = "black";
+        span.style.borderTop = "10px solid white";
+      }
+    });
+    dateSpans.forEach(span => span.style.color = "white");
   }
-
-  $hourParis[0].innerHTML = h;
-  $hourParis[2].innerHTML = min;
-  $hourParis[4].innerHTML = sec;
-
-  const days = [
-    "Dimanche",
-    "lundi",
-    "Mardi",
-    "Mercredi",
-    "Jeudi",
-    "Vendredi",
-    "Samedi",
-  ];
-
-  let $dayOfWeek = days[$date.getDay()];
-  let day = $date.getDate();
-  let month = $date.getMonth() + 1;
-  let year = $date.getFullYear();
-
-  if (month < 10) {
-    month = "0" + month;
-  }
-  if (day < 10) {
-    day = "0" + day;
-  }
-
-  $dayParis[0].innerHTML = $dayOfWeek;
-  $dayParis[1].innerHTML = day;
-  $dayParis[2].innerHTML = month;
-  $dayParis[3].innerHTML = year;
 }
 
-setInterval(watchParis, 1000);
+// --- Initialisation pour chaque ville ---
+function startClocks() {
+  // Paris
+  setInterval(() => updateClock({
+    sectionSelector: ".watch-paris",
+    hourOffset: 0,
+    nightBg: "paris-nuit.jpg"
+  }), 1000);
+  updateClock({
+    sectionSelector: ".watch-paris",
+    hourOffset: 0,
+    nightBg: "paris-nuit.jpg"
+  });
 
-window.addEventListener("DOMContentLoaded", watchParis);
+  // New-York
+  setInterval(() => updateClock({
+    sectionSelector: ".watch-ny",
+    hourOffset: -6,
+    nightBg: "new-york-nuit.jpg"
+  }), 1000);
+  updateClock({
+    sectionSelector: ".watch-ny",
+    hourOffset: -6,
+    nightBg: "new-york-nuit.jpg"
+  });
 
-// heure de New-York
-
-let $watchLeft1 = document.querySelector(".watch-left1");
-let $secondaryTitle1 = document.querySelector(".watch-left1 .secondary-title1");
-let $hourNewYork = document.querySelectorAll(
-  ".watch-left1 .new-york .hour-new-york span"
-);
-let $dayNewYork = document.querySelectorAll(
-  ".watch-left1 .new-york .date-new-york span"
-);
-let $greetingNewYork = document.querySelector(".watch-left1 .new-york h2");
-
-function watchNewYork() {
-  let $date = new Date();
-
-  let h = $date.getHours() - 6;
-  let min = $date.getMinutes();
-  let sec = $date.getSeconds();
-
-  if (sec < 10) {
-    sec = "0" + sec;
-  }
-  if (min < 10) {
-    min = "0" + min;
-  }
-  if (h < 10) {
-    h = "0" + h;
-  }
-
-  if (h < 12) {
-    $greetingNewYork.innerHTML = "Bonjour";
-  }
-
-  if (h >= 12 && h < 18) {
-    $greetingNewYork.innerHTML = "Bon-après-midi";
-  }
-
-  if (h >= 18 && h < 24) {
-    $greetingNewYork.innerHTML = "Bonsoir";
-    $greetingNewYork.style.color = "black";
-    $watchLeft1.style.backgroundImage = "url('new-york-nuit.jpg')";
-    $watchLeft1.style.backgroundPosition = "center center";
-    $watchLeft1.style.backgroundSize = "cover";
-    $secondaryTitle1.style.backgroundColor = "rgba(0, 0, 0, 0.7)";
-    $secondaryTitle1.style.color = "white";
-
-    for (let i = 0; i < $hourNewYork.length; i++) {
-      if (i == 0 || i == 2 || i == 4) {
-        $hourNewYork[i].style.color = "white";
-        $hourNewYork[i].style.backgroundColor = "black";
-        $hourNewYork[i].style.borderTop = "10px solid white";
-      }
-    }
-
-    for (let i = 0; i < $dayNewYork.length; i++) {
-      $dayNewYork[i].style.color = "white";
-    }
-  }
-
-  $hourNewYork[0].innerHTML = h;
-  $hourNewYork[2].innerHTML = min;
-  $hourNewYork[4].innerHTML = sec;
-
-  const days = [
-    "Dimanche",
-    "lundi",
-    "Mardi",
-    "Mercredi",
-    "Jeudi",
-    "Vendredi",
-    "Samedi",
-  ];
-
-  let $dayOfWeek = days[$date.getDay()];
-  let day = $date.getDate();
-  let month = $date.getMonth() + 1;
-  let year = $date.getFullYear();
-
-  if (month < 10) {
-    month = "0" + month;
-  }
-  if (day < 10) {
-    day = "0" + day;
-  }
-
-  $dayNewYork[0].innerHTML = $dayOfWeek;
-  $dayNewYork[1].innerHTML = day;
-  $dayNewYork[2].innerHTML = month;
-  $dayNewYork[3].innerHTML = year;
+  // Yaoundé
+  setInterval(() => updateClock({
+    sectionSelector: ".watch-yaounde",
+    hourOffset: -1,
+    nightBg: "yaounde-nuit.jpg"
+  }), 1000);
+  updateClock({
+    sectionSelector: ".watch-yaounde",
+    hourOffset: -1,
+    nightBg: "yaounde-nuit.jpg"
+  });
 }
 
-setInterval(watchNewYork, 1000);
-
-window.addEventListener("DOMContentLoaded", watchNewYork);
-
-// Heure de yaoundé
-
-let $watchLeft2 = document.querySelector(".watch-left2");
-let $secondaryTitle2 = document.querySelector(".watch-left2 .secondary-title2");
-let $hourYaounde = document.querySelectorAll(
-  ".watch-left2 .yaounde .hour-yaounde span"
-);
-let $dayYaounde = document.querySelectorAll(
-  ".watch-left2 .yaounde .date-yaounde span"
-);
-let $greetingYaounde = document.querySelector(".watch-left2 .yaounde h2");
-
-console.log($watchLeft2);
-
-function watchYaounde() {
-  let $date = new Date();
-
-  let h = $date.getHours() - 1;
-  let min = $date.getMinutes();
-  let sec = $date.getSeconds();
-
-  if (sec < 10) {
-    sec = "0" + sec;
-  }
-  if (min < 10) {
-    min = "0" + min;
-  }
-  if (h < 10) {
-    h = "0" + h;
-  }
-
-  if (h < 12) {
-    $greetingYaounde.innerHTML = "Bonjour";
-  }
-
-  if (h >= 12 && h < 18) {
-    $greetingYaounde.innerHTML = "Bon-après-midi";
-  }
-
-  if (h >= 18 && h < 24) {
-    $greetingYaounde.innerHTML = "Bonsoir";
-    $greetingYaounde.style.color = "black";
-    $watchLeft2.style.backgroundImage = "url('yaounde-nuit.jpg')";
-    $watchLeft2.style.backgroundPosition = "center center";
-    $watchLeft2.style.backgroundSize = "cover";
-    $secondaryTitle2.style.backgroundColor = "rgba(0, 0, 0, 0.7)";
-    $secondaryTitle2.style.color = "white";
-    for (let i = 0; i < $hourYaounde.length; i++) {
-      if (i == 0 || i == 2 || i == 4) {
-        $hourYaounde[i].style.color = "white";
-        $hourYaounde[i].style.backgroundColor = "black";
-        $hourYaounde[i].style.borderTop = "10px solid white";
-      }
-    }
-
-    for (let i = 0; i < $dayYaounde.length; i++) {
-      $dayYaounde[i].style.color = "white";
-    }
-  }
-
-  $hourYaounde[0].innerHTML = h;
-  $hourYaounde[2].innerHTML = min;
-  $hourYaounde[4].innerHTML = sec;
-
-  const days = [
-    "Dimanche",
-    "lundi",
-    "Mardi",
-    "Mercredi",
-    "Jeudi",
-    "Vendredi",
-    "Samedi",
-  ];
-
-  let $dayOfWeek = days[$date.getDay()];
-  let day = $date.getDate();
-  let month = $date.getMonth() + 1;
-  let year = $date.getFullYear();
-
-  if (month < 10) {
-    month = "0" + month;
-  }
-  if (day < 10) {
-    day = "0" + day;
-  }
-
-  $dayYaounde[0].innerHTML = $dayOfWeek;
-  $dayYaounde[1].innerHTML = day;
-  $dayYaounde[2].innerHTML = month;
-  $dayYaounde[3].innerHTML = year;
-}
-
-setInterval(watchYaounde, 1000);
-
-window.addEventListener("DOMContentLoaded", watchYaounde);
+window.addEventListener("DOMContentLoaded", startClocks);
